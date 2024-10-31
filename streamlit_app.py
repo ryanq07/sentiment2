@@ -1,50 +1,65 @@
 import streamlit as st
+import pandas as pd
 from transformers import pipeline
+from textblob import TextBlob
 
-# Load pre-trained sentiment-analysis pipeline from Hugging Face's transformers
+# Load the sentiment analysis model
 sentiment_analyzer = pipeline("sentiment-analysis")
 
-# Function to analyze sentiment
-def analyze_sentiment(conversation):
-    return sentiment_analyzer(conversation)
+# Function to analyze conversation and infer sentiment/tone
+def analyze_conversation(conversation):
+    # Analyze each message in the conversation thread
+    analysis_results = []
+    for idx, message in enumerate(conversation):
+        sentiment_result = sentiment_analyzer(message)[0]  # using transformers pipeline for sentiment
+        blob = TextBlob(message)  # using TextBlob for subjectivity
+        analysis_results.append({
+            "Message": message,
+            "Sentiment": sentiment_result["label"],
+            "Confidence": sentiment_result["score"],
+            "Subjectivity": blob.sentiment.subjectivity
+        })
+    return pd.DataFrame(analysis_results)
 
-# Function to provide advice based on sentiment
-def provide_advice(sentiment_label):
-    if sentiment_label == "POSITIVE":
-        return "Great job! Keep the positive tone, and continue to express enthusiasm or encouragement."
-    elif sentiment_label == "NEGATIVE":
-        return "Consider rephrasing to sound more constructive. Try using empathetic or encouraging language."
-    elif sentiment_label == "NEUTRAL":
-        return "Neutral tone is fine, but if possible, engage more by showing empathy or positivity to build rapport."
-    else:
-        return "Monitor the tone and try to keep responses supportive and constructive."
-
-# Streamlit app layout
-def main():
-    st.title("Conversation Sentiment & Tone Analyzer with Improvement Advice")
-
-    # Text input box for user to paste conversations
-    conversation_thread = st.text_area("Paste conversation thread here:")
-
-    # When the user clicks the "Analyze" button
-    if st.button("Analyze"):
-        if conversation_thread:
-            # Analyze sentiments of the conversation
-            sentiments = analyze_sentiment(conversation_thread)
-
-            # Show results and provide advice
-            for i, sentiment in enumerate(sentiments):
-                label = sentiment['label']
-                score = sentiment['score']
-                
-                st.write(f"**Sentence {i+1}:** {label} (Confidence: {score:.2f})")
-                
-                # Provide advice based on sentiment
-                advice = provide_advice(label)
-                st.write(f"**Advice:** {advice}")
-                st.write("---")
+# Function to provide suggestions for improvement
+def suggest_improvements(analysis_df):
+    suggestions = []
+    for _, row in analysis_df.iterrows():
+        if row["Sentiment"] == "NEGATIVE" or row["Subjectivity"] > 0.5:
+            suggestions.append(f"Consider rephrasing: '{row['Message']}' for a more positive and objective tone.")
+        elif row["Sentiment"] == "POSITIVE" and row["Confidence"] < 0.7:
+            suggestions.append(f"Enhance confidence in positive tone in message: '{row['Message']}'.")
         else:
-            st.write("Please input a conversation thread.")
+            suggestions.append("Message tone appears balanced.")
+    return suggestions
+
+# Streamlit application layout
+def main():
+    st.title("Conversation Tone Analyzer")
+    st.write("Upload a conversation thread file (CSV with 'message' column) to analyze tone and get suggestions.")
+
+    uploaded_file = st.file_uploader("Upload Conversation File", type=["csv", "txt"])
+
+    if uploaded_file is not None:
+        # Load conversation data
+        conversation_df = pd.read_csv(uploaded_file)
+        if 'message' not in conversation_df.columns:
+            st.error("The CSV file must have a 'message' column.")
+            return
+        
+        st.write("Conversation Data:")
+        st.write(conversation_df)
+
+        # Analyze tone/sentiment
+        st.write("Analysis Results:")
+        analysis_df = analyze_conversation(conversation_df['message'].tolist())
+        st.write(analysis_df)
+
+        # Generate suggestions
+        st.write("Improvement Suggestions:")
+        suggestions = suggest_improvements(analysis_df)
+        for suggestion in suggestions:
+            st.write(suggestion)
 
 if __name__ == "__main__":
     main()
