@@ -3,3 +3,4 @@ transformers
 torch
 textblob
 hmac
+hashlib
