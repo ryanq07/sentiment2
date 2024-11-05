@@ -61,17 +61,5 @@ def main():
         for suggestion in suggestions:
             st.write(suggestion)
 
-elif page == "About Us":
-        st.title("About Us")
-        st.write("""
-        **Conversation Tone Analyzer** is an advanced tool designed to help users analyze and improve the tone of their conversations.
-        By leveraging natural language processing and sentiment analysis, our application provides insights into the emotional 
-        tone of each message in a conversation and suggests ways to foster constructive, positive communication.
-
-        **Our Mission**: Empower users to communicate more effectively, promoting clarity and positivity in every conversation.
-
-        **Contact Us**: For more information or feedback, please reach out at support@toneanalyzer.com.
-        """)
-
 if __name__ == "__main__":
     main()
