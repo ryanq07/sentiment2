@@ -37,7 +37,7 @@ def suggest_improvements(analysis_df):
 def main():
     # Sidebar navigation
     st.sidebar.title("Navigation")
-    page = st.sidebar.radio("Go to", ["Tone Analyzer", "About Us"])
+    page = st.sidebar.radio("Go to", ["Tone Analyzer", "About Us", "Methodology"])
 
     if page == "Tone Analyzer":
         st.title("Conversation Tone Analyzer")
@@ -71,26 +71,72 @@ def main():
         st.write("""
         **Project Scope** The project aims to put in place a solution to provide suggestions 
         to users on how to better deal with or to improve their conversations with others. 
-        
-        **Objectives**: Empower users to communicate more effectively, promoting clarity and positivity in every conversation.
-
                  
-        **Data Sources**: No external data sources. Conversations are provided by users in CSV.
+        **Data Sources**: 
+            No external data sources. Conversations are provided by users in CSV.
 
-
-        **Features**: For more information or feedback, please reach out at support@toneanalyzer.com.
         """)
-        st.markdown("""
-        The application features the following
 
-	    Conversation Input Interface:
+        st.markdown("""
+	**OBJECTIVES**
+                    
+    Identify Sentiment and Tone:
+        - Accurately classify the tone of individual messages (e.g., positive, neutral, 
+        negative) and the overall conversation flow.
+        - Detect specific tones such as anger, frustration, happiness, and satisfaction 
+        to better understand customer emotions.
+
+	Improve Customer Interaction Quality:
+        - Provide actionable insights to customer service representatives on how to 
+        adjust their tone for better outcomes.
+        - Highlight areas where representatives may need to be more empathetic, 
+        positive, or constructive.
+
+	Enhance Customer Satisfaction:
+        - Recognize patterns in tone that lead to higher customer satisfaction and 
+        loyalty.
+        - Offer insights to reduce response time, improve conversational flow, and 
+        ultimately enhance the customer experience.    
+                    """)
+
+
+        st.markdown("""
+    **FEATURES**
+                    
+    The application features the following:
+
+	Conversation Input Interface:
         - Supports CSV file uploads to retrieve recent interactions.
 
-	    Automated Tone and Sentiment Detection:
+	Automated Tone and Sentiment Detection:
         - Analyzes each sentence or message within the conversation and classifies its tone (e.g., positive, negative, neutral) and specific sentiment (e.g., frustration, satisfaction).
         - Suggests how to respond and to improve the overall tone of the conversation,
 
         """)
+
+ elif page == "Methodology":
+        st.title("Methodology")
+        st.write("""
+        **Methodology**:
+        
+        Our tool uses state-of-the-art natural language processing (NLP) techniques to analyze conversation threads.
+        
+        1. **Sentiment Analysis**: We utilize a pre-trained model from Hugging Face's `transformers` library to classify the sentiment 
+           of each message as positive or negative. The model provides a confidence score for each classification.
+        
+        2. **Subjectivity Analysis**: Using TextBlob, we calculate the subjectivity of each message. High subjectivity indicates that 
+           the message is more opinionated, whereas low subjectivity suggests a more objective tone.
+
+        3. **Improvement Suggestions**: Based on the sentiment and subjectivity scores:
+           - **Negative Messages**: For messages classified as negative, we suggest ways to rephrase for a more constructive tone.
+           - **Highly Subjective Messages**: For messages with high subjectivity, we recommend approaches for a more balanced and 
+             objective tone.
+           - **Positive Messages with Low Confidence**: For positive messages with lower confidence scores, we suggest enhancing the 
+             tone to ensure clarity and strength in positive communication.
+        
+        These combined approaches allow our tool to provide nuanced insights into conversation tone, enabling more effective communication.
+        """)
+
 
 if __name__ == "__main__":
     main()
