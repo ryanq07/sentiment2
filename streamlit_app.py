@@ -69,13 +69,47 @@ def main():
     elif page == "About Us":
         st.title("About Us")
         st.write("""
-        **Conversation Tone Analyzer** is an advanced tool designed to help users analyze and improve the tone of their conversations.
-        By leveraging natural language processing and sentiment analysis, our application provides insights into the emotional 
-        tone of each message in a conversation and suggests ways to foster constructive, positive communication.
+        **Project Scope** The project aims to put in place a solution to provide suggestions 
+        to users on how to better deal with or to improve their conversations with others. 
+                 
+        **Data Sources**: 
+            No external data sources. Conversations are provided by users in CSV.
 
-        **Our Mission**: Empower users to communicate more effectively, promoting clarity and positivity in every conversation.
+        """)
 
-        **Contact Us**: For more information or feedback, please reach out at support@toneanalyzer.com.
+        st.markdown("""
+	**OBJECTIVES**
+                    
+    Identify Sentiment and Tone:
+        - Accurately classify the tone of individual messages (e.g., positive, neutral, 
+        negative) and the overall conversation flow.
+        - Detect specific tones such as anger, frustration, happiness, and satisfaction 
+        to better understand customer emotions.
+
+	Improve Customer Interaction Quality:
+        - Provide actionable insights to customer service representatives on how to 
+        adjust their tone for better outcomes.
+        - Highlight areas where representatives may need to be more empathetic, 
+        positive, or constructive.
+
+	Enhance Customer Satisfaction:
+        - Recognize patterns in tone that lead to higher customer satisfaction and 
+        loyalty.
+        - Offer insights to reduce response time, improve conversational flow, and 
+        ultimately enhance the customer experience.    
+                    """)
+
+
+        st.markdown("""
+    **FEATURES**
+                    
+    The application features the following:
+
+	Conversation Input Interface:
+        - Supports CSV file uploads to retrieve recent interactions.
+        
+        
+        
         """)
 
     elif page == "Methodology":
