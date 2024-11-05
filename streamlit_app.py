@@ -2,6 +2,20 @@ import streamlit as st
 import pandas as pd
 from transformers import pipeline
 from textblob import TextBlob
+from utility import check_password
+
+# region <--------- Streamlit Page Configuration --------->
+
+st.set_page_config(
+    layout="centered",
+    page_title="My Streamlit App"
+)
+
+# Do not continue if check_password is not True.  
+if not check_password():  
+    st.stop()
+
+
 
 # Load the sentiment analysis model
 sentiment_analyzer = pipeline("sentiment-analysis")
@@ -117,7 +131,7 @@ def main():
         st.write("""
         **Methodology**:
         
-        Our tool uses state-of-the-art natural language processing (NLP) techniques to analyze conversation threads.
+        Our tool uses natural language processing (NLP) techniques to analyze conversation threads.
         
         1. **Sentiment Analysis**: We utilize a pre-trained model from Hugging Face's `transformers` library to classify the sentiment 
            of each message as positive or negative. The model provides a confidence score for each classification.
@@ -134,6 +148,17 @@ def main():
         
         These combined approaches allow our tool to provide nuanced insights into conversation tone, enabling more effective communication.
         """)
+
+st.title("Streamlit App")
+form = st.form(key="form")
+form.subheader("Prompt")
+  
+
+user_prompt = form.text_area("Enter your prompt here", height=200)
+
+
+if form.form_submit_button("Submit"):
+    print(f"User has submitted {user_prompt}")
 
 if __name__ == "__main__":
     main()
