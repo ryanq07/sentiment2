@@ -33,33 +33,50 @@ def suggest_improvements(analysis_df):
             suggestions.append("Message tone appears balanced.")
     return suggestions
 
-# Streamlit application layout
+# Main function for Streamlit app
 def main():
-    st.title("Conversation Tone Analyzer")
-    st.write("Upload a conversation thread file (CSV with 'message' column) to analyze tone and get suggestions.")
+    # Sidebar navigation
+    st.sidebar.title("Navigation")
+    page = st.sidebar.radio("Go to", ["Tone Analyzer", "About Us"])
 
-    uploaded_file = st.file_uploader("Upload Conversation File", type=["csv", "txt"])
+    if page == "Tone Analyzer":
+        st.title("Conversation Tone Analyzer")
+        st.write("Upload a conversation thread file (CSV with 'message' column) to analyze tone and get suggestions.")
 
-    if uploaded_file is not None:
-        # Load conversation data
-        conversation_df = pd.read_csv(uploaded_file)
-        if 'message' not in conversation_df.columns:
-            st.error("The CSV file must have a 'message' column.")
-            return
-        
-        st.write("Conversation Data:")
-        st.write(conversation_df)
+        uploaded_file = st.file_uploader("Upload Conversation File", type=["csv", "txt"])
 
-        # Analyze tone/sentiment
-        st.write("Analysis Results:")
-        analysis_df = analyze_conversation(conversation_df['message'].tolist())
-        st.write(analysis_df)
+        if uploaded_file is not None:
+            # Load conversation data
+            conversation_df = pd.read_csv(uploaded_file)
+            if 'message' not in conversation_df.columns:
+                st.error("The CSV file must have a 'message' column.")
+                return
 
-        # Generate suggestions
-        st.write("Improvement Suggestions:")
-        suggestions = suggest_improvements(analysis_df)
-        for suggestion in suggestions:
-            st.write(suggestion)
+            st.write("Conversation Data:")
+            st.write(conversation_df)
+
+            # Analyze tone/sentiment
+            st.write("Analysis Results:")
+            analysis_df = analyze_conversation(conversation_df['message'].tolist())
+            st.write(analysis_df)
+
+            # Generate suggestions
+            st.write("Improvement Suggestions:")
+            suggestions = suggest_improvements(analysis_df)
+            for suggestion in suggestions:
+                st.write(suggestion)
+
+    elif page == "About Us":
+        st.title("About Us")
+        st.write("""
+        **Conversation Tone Analyzer** is an advanced tool designed to help users analyze and improve the tone of their conversations.
+        By leveraging natural language processing and sentiment analysis, our application provides insights into the emotional 
+        tone of each message in a conversation and suggests ways to foster constructive, positive communication.
+
+        **Our Mission**: Empower users to communicate more effectively, promoting clarity and positivity in every conversation.
+
+        **Contact Us**: For more information or feedback, please reach out at support@toneanalyzer.com.
+        """)
 
 if __name__ == "__main__":
     main()
