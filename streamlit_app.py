@@ -69,13 +69,16 @@ def main():
     elif page == "About Us":
         st.title("About Us")
         st.write("""
-        **Conversation Tone Analyzer** is an advanced tool designed to help users analyze and improve the tone of their conversations.
-        By leveraging natural language processing and sentiment analysis, our application provides insights into the emotional 
-        tone of each message in a conversation and suggests ways to foster constructive, positive communication.
+        **Project Scope** The project aims to put in place a solution to provide suggestions 
+        to users on how to better deal with or to improve their conversations with others. 
+        
+        **Objectives**: Empower users to communicate more effectively, promoting clarity and positivity in every conversation.
 
-        **Our Mission**: Empower users to communicate more effectively, promoting clarity and positivity in every conversation.
+                 
+        **Data Sources**: No external data sources. Conversations are provided by users in CSV.
 
-        **Contact Us**: For more information or feedback, please reach out at support@toneanalyzer.com.
+
+        **Features**: For more information or feedback, please reach out at support@toneanalyzer.com.
         """)
 
 if __name__ == "__main__":
