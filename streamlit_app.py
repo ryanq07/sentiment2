@@ -80,6 +80,17 @@ def main():
 
         **Features**: For more information or feedback, please reach out at support@toneanalyzer.com.
         """)
+        st.markdown("""
+        The application features the following
+
+	    Conversation Input Interface:
+        - Supports CSV file uploads to retrieve recent interactions.
+
+	    Automated Tone and Sentiment Detection:
+        - Analyzes each sentence or message within the conversation and classifies its tone (e.g., positive, negative, neutral) and specific sentiment (e.g., frustration, satisfaction).
+        - Suggests how to respond and to improve the overall tone of the conversation,
+
+        """)
 
 if __name__ == "__main__":
     main()
