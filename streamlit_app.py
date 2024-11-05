@@ -149,16 +149,7 @@ def main():
         These combined approaches allow our tool to provide nuanced insights into conversation tone, enabling more effective communication.
         """)
 
-st.title("Streamlit App")
-form = st.form(key="form")
-form.subheader("Prompt")
-  
 
-user_prompt = form.text_area("Enter your prompt here", height=200)
-
-
-if form.form_submit_button("Submit"):
-    print(f"User has submitted {user_prompt}")
 
 if __name__ == "__main__":
     main()
